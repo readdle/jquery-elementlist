@@ -1,0 +1,31 @@
+body {
+    font-family: Arial;
+}
+
+.ulist-item {
+    max-width: 203px;
+    padding: 5px;
+    border: 1px solid;
+    float: left;
+    margin: 0 5px 5px 0;
+}
+
+.ulist-del {
+    color: red;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.ulist-input {
+    max-width: 203px;
+    background: transparent;
+    float: left;
+    border: 0;
+
+    padding: 7px 0;
+    font-size: 14px;
+}
+
+.ulist-input:focus, .search:focus {
+    outline: none;
+}

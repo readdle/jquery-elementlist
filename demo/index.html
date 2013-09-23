@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>elementList example</title>
+    <link rel="stylesheet" href="example.css"/>
+</head>
+<body>
+    <div>
+        <h3>elementList - the jQuery plugin</h3>
+        <p>You may use the "insert", "del", "delLast" and "delAll" methods to manual adding and deleting elements in list, or use the input field (use Enter and Backspace keys)</p>
+        <p>You can see the more usage examples in the <a href="https://github.com/readdle/jquery-elementlist">Documentation</a></p>
+    </div>
+
+    <input id="push" type="button" value="PUSH"/>
+    <input id="dell-all" type="button" value="DEL ALL"/>
+
+    <div id="push_recipients_list">
+        <!-- TEMPLATE -->
+        <div class="selector round" id="liveuser_template" data-userid="">
+            <strong class="ulist-val"></strong>
+            <a href="#" class='ulist-del'>X</a>
+        </div>
+        <!-- USERS CONTAINER -->
+        <div id="users_container"></div>
+        <!-- INPUT -->
+        <div style="width: 203px; float: left;">
+            <input type="text" class="ulist-input" id="userlist" placeholder="Enter the username..."/>
+            <div class="results"></div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="../jquery.elementList.js"></script>
+    <script type="text/javascript" src="example.js"></script>
+</body>
+</html>
