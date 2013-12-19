@@ -1,17 +1,17 @@
 /**
- * elementList - jQuery Plugin
- * version: 1.0
- * requires jQuery v1.6 or later
+ * ElementList - jQuery Plugin
+ * Version: 1.1
+ * Requires jQuery v1.6 or later
  *
  * Documentation: https://github.com/readdle/jquery-elementlist
  *
- * Copyright (c) 2013 Rodik Alexandr - rodik@readdle.com
+ * Copyright (c) 2013 Readdle inc.
  */
 (function($) {
     $.fn.elementList = function(options) {
 
         options = $.extend({
-            template_id: "liveuser_template", // data element template
+            template_id: "liveuser_template", // element's template
             input_id: "user-input",           // input id for add and delete elements
             container_id: "users_container",  // id of the data elements container
             enter_key_push: true,             // if true - the elements is pushed to list by pressing the enter key in the input field
@@ -23,24 +23,26 @@
 
         // mini build-in template engine
         var tpl = {
-            // link to the template object
-            templateElement: null,
-            // get pure template without data and save it into templateElement
+            // get pure template without data and save it into $templateElement
             init: function() {
                 var selector = '#'+options.template_id;
-                this.templateElement = $(_this).children(selector).clone();
-                this.templateElement.find('.ulist-val').text('');
-                this.templateElement.attr('data-userid', '');
-                this.templateElement.removeAttr('id');
+                this.$templateElement = $(_this).children(selector).clone();
+                this.$templateElement.removeAttr('id');
 
                 $(_this).children(selector).remove();
 
-                return this.templateElement;
+                return this.$templateElement;
             },
 
-            // Return clone of the templateElement
-            generate: function() {
-                return this.templateElement.clone();
+            // Return clone of the $templateElement with data
+            generate: function(data) {
+                var userData = data || {};
+                var tpl = this.$templateElement.clone();
+
+                $.each(userData, function(k,v) {
+                    tpl.html(tpl.html().replace('{%'+k+'%}', v));
+                });
+                return tpl;
             }
         };
 
@@ -48,9 +50,9 @@
         this.count = 0;
 
         // insert element into list
-        this.insert = function(title, id) {
-            var tmp = tpl.generate();
-            tmp.find('.ulist-val').text(title);
+        this.insert = function(title, id, data) {
+            var userData = data || {};
+            var tmp = tpl.generate($.extend(userData, {val: title}));
             tmp.attr('data-userid', id);
             tmp.addClass('ulist-item');
             $(tmp).appendTo('#'+options.container_id);
@@ -58,7 +60,8 @@
             this.valHidden = '';
             $(this).trigger('elementList.add', {
                 'id': id,
-                'title': title
+                'title': title,
+                'data': userData
             });
         };
 

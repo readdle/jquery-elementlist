@@ -15,18 +15,21 @@
     <input id="dell-all" type="button" value="DEL ALL"/>
 
     <div id="push_recipients_list">
+
         <!-- TEMPLATE -->
-        <div class="selector round" id="liveuser_template" data-userid="">
-            <strong class="ulist-val"></strong>
+        <div id="liveuser_template">
+            <strong>{%val%}</strong>
             <a href="#" class='ulist-del'>X</a>
         </div>
+
         <!-- USERS CONTAINER -->
         <div id="users_container"></div>
+
         <!-- INPUT -->
         <div style="width: 203px; float: left;">
-            <input type="text" class="ulist-input" id="userlist" placeholder="Enter the username..."/>
-            <div class="results"></div>
+            <input type="text" id="userlist" placeholder="Enter the username..."/>
         </div>
+
     </div>
 
     <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
