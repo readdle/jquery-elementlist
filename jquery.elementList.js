@@ -18,22 +18,22 @@
             backspace_key_pop: true           // if true - removing elements from list by pressing the backspace key in the empty input field
         }, options);
 
-        // link to object context
-        var obj = this;
+        // link to the object context
+        var _this = this;
 
         // mini build-in template engine
         var tpl = {
-            // link to template object
+            // link to the template object
             templateElement: null,
             // get pure template without data and save it into templateElement
             init: function() {
                 var selector = '#'+options.template_id;
-                this.templateElement = $(obj).children(selector).clone();
+                this.templateElement = $(_this).children(selector).clone();
                 this.templateElement.find('.ulist-val').text('');
                 this.templateElement.attr('data-userid', '');
                 this.templateElement.removeAttr('id');
 
-                $(obj).children(selector).remove();
+                $(_this).children(selector).remove();
 
                 return this.templateElement;
             },
@@ -88,34 +88,34 @@
         // Initialize the plugin
         var init = function() {
             // Hidden value of the input element (value + flag symbol)
-            obj.valHidden = '';
+            _this.valHidden = '';
             // Template init
             tpl.init();
             // Counter init
-            obj.count = $(this).find('#'+options.container_id).find('.ulist-item').size();
+            _this.count = $(this).find('#'+options.container_id).find('.ulist-item').size();
             // Keyboard init
             var input = $('#'+options.input_id);
             input.keyup(function(e) {
                 var val = input.val();
-                switch (e.keyCode) {
-                    // Press backspace
-                    case 8:
-                        if(val == '' && val == obj.valHidden  && obj.count && options.backspace_key_pop) {
-                            obj.delLast();
-                        }
-                        break;
-                    // Press ENTER
-                    case 13:
-                        if(val && options.enter_key_push) {
-                            obj.insert($.trim(val), 0);
-                            input.val('');
-                        }
-                        break;
-                    // Press any key
-                    default:
-                        break;
+                // Backspace
+                if (e.keyCode == 8) {
+                    if(val == '' && val == _this.valHidden && _this.count && options.backspace_key_pop) {
+                        _this.delLast();
+                    }
                 }
-                obj.valHidden = val;
+                _this.valHidden = val;
+            })
+            .keydown(function(e) {
+                var val = input.val();
+                // Enter
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    if(val && options.enter_key_push) {
+                        _this.insert($.trim(val), 0);
+                        input.val('');
+                    }
+                }
+                _this.valHidden = val;
             });
 
         };
